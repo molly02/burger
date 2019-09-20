@@ -1,4 +1,39 @@
 <h1>Burgers</h1>
 
- * Setup the `index.handlebars` to have the template that Handlebars can render onto.
-* Create a button in `index.handlebars` that will submit the user input into the database.
+ * Setup the `index.handlebars` to have the 
+ template that Handlebars can render onto.
+* Create a button in `index.handlebars`
+ that will submit the user input into the database.
+
+<h2>Add a Burger</h2>
+<form id="addburger" class="button-size">
+	<textarea type="text" name="burger_name"></textarea>
+	<button type="submit">Add Burger!</button>
+</form>
+
+
+<script type="text/javascript">
+
+  $("#createburger").on("submit", function(event) {
+    // Make sure to preventDefault on a submit event.
+    event.preventDefault();
+
+    // [name=plan] will find an element with a "name" attribute equal to the string "plan"
+    var newBurger = {
+      plan: $("#createburger [name=burger_name]").val().trim()
+    };
+
+    // Send the POST request.
+    $.ajax("/api/burgers", {
+      type: "POST",
+      data: newBurger
+    }).then(
+      function() {
+        console.log("created new burger");
+        // Reload the page to get the updated list
+        location.reload();
+      }
+    );
+  });
+
+</script>
